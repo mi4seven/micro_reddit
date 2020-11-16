@@ -4,5 +4,11 @@ class User < ApplicationRecord
     validates :email, uniqueness: {scope: :email, message: "A User with that email already exists."}
     validates :email, format: {with: /\A([^@\s]+)@((?:[-a-z0-9]+\.)+[a-z]{2,})\Z/ , message: "Example email is micro_redit@gmail.com.au"}    
 
-    has_many :posts
+    has_many :posts,
+        foreign_key: :author_id,
+        dependent: :destroy
+
+    has_many :comments,
+        foreign_key: :author_id,
+        dependent: :destroy
 end
